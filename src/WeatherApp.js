@@ -1,59 +1,60 @@
 import React, {Component} from 'react';
 import WeatherAppList from './WeatherAppList';
 
+
 import axios from 'axios';
 
+let IDObjects = '';
+console.log(IDObjects);
 
 class WeatherApp extends Component {
     constructor(props){
         super(props);
         this.state = {
             apiArr: [],
-            IDObjects: []
+            FilteredIDs: []
         }
     }
 
     componentDidMount() {
-        this.getWeatherData();
+        this.getCitiesID();
     }
 
-    getCitiesID() {
+    getCitiesID = () => {
 
         axios.get('./city.list.json')
         .then( res => {
-            let IDObjects = res.data;
-            return(IDObjects)
-        })
-    }
-
-    getWeatherData() {
-
-        axios.get('http://api.openweathermap.org/data/2.5/forecast?id=2172797&appid=9ceb925d46b75ee1c3f57b6bfec0c2aa')
-        .then( res => {
-
-            let newWeatherObj = {
-                city: res.data.city.name,
-                conditions: res.data.list
-            }
-
-            console.log(newWeatherObj);
-
-            this.setState((state) => {
-                return(
-                    state.apiArr.push(res.data)
-                )
-            })
+            IDObjects = res.data;
         });
     }
 
+    filterIDs = () => {
+        if(this._input.value.length > 3) {
+            this.setState((state) => {
+                let newFilteredIDs = IDObjects.filter((IDObj) => {
+                    return(IDObj.name.includes(this._input.value))
+                })
+                return({FilteredIDs: newFilteredIDs})
+            })
+        }
 
+    }
+
+    removeFindView = () => {
+        this.setState((state)=> {
+            return({FilteredIDs: []})
+        });
+        this._input.value = '';
+    }
 
     render() {
         return(
             <div>
                 <h1>Weather App</h1>
-                <input type='text' ref={(element) => {this._input = element;}} placeholder='Search city' onChange={this.getCitiesID}/>
-                <WeatherAppList CityWeather={this.state.apiArr}/>
+                <label>Search city: <br></br>
+                <input type='text' id='search' ref={(element) => {this._input = element;}} placeholder='Search city' onChange={this.filterIDs}/>
+                </label>
+                <WeatherAppList CityWeather={this.state.apiArr} Filtered={this.state.FilteredIDs} RemoveFindView={this.removeFindView}/>
             </div>
         )
     }
