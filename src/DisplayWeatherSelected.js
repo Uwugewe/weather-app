@@ -15,9 +15,6 @@ function DisplaySelectedCity(props) {
         </div>
     )
 
-    
-
-    
 }
 
 export default DisplaySelectedCity;

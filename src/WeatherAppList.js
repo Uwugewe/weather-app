@@ -32,8 +32,16 @@ class WeatherAppList extends Component {
             });
         });
     }
+
+    clearCurrentConditions = () => {
+        this.setState(state => {
+            return({weatherConditions: {},
+                selectedID: ''})
+        });
+    }
     
     render() {
+
         let offers = this.props.Filtered.map((offerObj) => {
 
             let ShowCityLi = '';
@@ -61,11 +69,18 @@ class WeatherAppList extends Component {
                     </li>);
             }
             return(ShowCityLi)
-        })
+        });
+
+        let backButton = '';
+
+        if(this.state.weatherConditions.hasOwnProperty('City: ')){
+            backButton = (<button className='back-button' onClick={this.clearCurrentConditions}>X</button>)
+        }
     
         return(
             <div>
                 <h1>{offers}</h1>
+                {backButton}
                 <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}/>
             </div>
         )
