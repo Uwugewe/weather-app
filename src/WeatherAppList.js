@@ -16,7 +16,7 @@ class WeatherAppList extends Component {
 
         axios.get(`http://api.openweathermap.org/data/2.5/forecast?id=${this.state.selectedID}&appid=9ceb925d46b75ee1c3f57b6bfec0c2aa`)
         .then( res => {
-
+            console.log(res);
             this.setState((state)=> {
 
                 return({
@@ -53,6 +53,7 @@ class WeatherAppList extends Component {
                                 return({selectedID: offerObj.id})
                             });
                             this.props.RemoveFindView();
+                            this.props.HideInput();
                             setTimeout(this.getWeatherData, 0);
                         }}>Select</button>
                     </li>);
@@ -72,14 +73,30 @@ class WeatherAppList extends Component {
         });
 
         let backButton = '';
+        let showWeather = '';
 
         if(this.state.weatherConditions.hasOwnProperty('City: ')){
-            backButton = (<button className='back-button' onClick={this.clearCurrentConditions}>X</button>)
+            backButton = (<button className='back-button' onClick={() => {
+                this.clearCurrentConditions();
+                this.props.HideInput();
+            }}>X</button>)
         }
+
+        // if(this.state.weatherConditions.hasOwnProperty('City: ')){
+        //     showWeather = (
+        //         <div>
+        //             <button className='back-button' onClick={() => {
+        //                 this.clearCurrentConditions();
+        //                 this.props.HideInput();
+        //             }}>X</button>
+        //             <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}/>
+        //         </div>
+        //     )
+        // }
     
         return(
             <div>
-                <h1>{offers}</h1>
+                {offers}
                 {backButton}
                 <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}/>
             </div>
