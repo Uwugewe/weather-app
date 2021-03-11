@@ -4,10 +4,24 @@ class DisplaySelectedCity extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            SelectValue: ''
         }
-        this.myRange = React.createRef();
+        this.selectInterval = React.createRef();
     }
+
+    componentDidMount(){
+        this.selectIntervalValue();
+    }
+
+    selectIntervalValue = () => {
+        setTimeout(() => {
+            this.setState(state => {
+                console.log(this.selectInterval.current.value)
+                return({SelectValue: `${this.selectInterval.current.value}`})
+            })
+        }, 0);
+    }
+
     render(){
 
         let WeatherObj = this.props.DisplayWeather;
@@ -17,20 +31,17 @@ class DisplaySelectedCity extends Component {
                     <li key={label}>{value}</li>
             )
         })
-
-        setTimeout(() => {
-            console.log(this.myRange)
-        }, 0);
         
         return(
             <div>
-                <input id="interval" type="range" ref={this.myRange} list="tickmarks" step="50"/>
-
-                <datalist id="tickmarks">
-                    <option value="0" label="0%"></option>
-                    <option value="50" label="50%"></option>
-                    <option value="100" label="100%"></option>
-                </datalist>
+                <label>Choose interval:
+                    <select name="days" id="time-interval" ref={this.selectInterval} onChange={this.selectIntervalValue}>
+                        <option value="now">Now</option>
+                        <option value="one">1 day</option>
+                        <option value="three">3 days</option>
+                        <option value="seven">7 days</option>
+                    </select>
+                </label>
                 {displayWeather}
             </div>
         )

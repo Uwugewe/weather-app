@@ -72,33 +72,24 @@ class WeatherAppList extends Component {
             return(ShowCityLi)
         });
 
-        let backButton = '';
         let showWeather = '';
 
         if(this.state.weatherConditions.hasOwnProperty('City: ')){
-            backButton = (<button className='back-button' onClick={() => {
-                this.clearCurrentConditions();
-                this.props.HideInput();
-            }}>X</button>)
+            showWeather = (
+                <div>
+                    <button className='back-button' onClick={() => {
+                        this.clearCurrentConditions();
+                        this.props.HideInput();
+                    }}>X</button>
+                    <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}/>
+                </div>
+            )
         }
-
-        // if(this.state.weatherConditions.hasOwnProperty('City: ')){
-        //     showWeather = (
-        //         <div>
-        //             <button className='back-button' onClick={() => {
-        //                 this.clearCurrentConditions();
-        //                 this.props.HideInput();
-        //             }}>X</button>
-        //             <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}/>
-        //         </div>
-        //     )
-        // }
     
         return(
             <div>
                 {offers}
-                {backButton}
-                <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}/>
+                {showWeather}
             </div>
         )
     }
