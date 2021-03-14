@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import WeatherAppList from './WeatherAppList';
+import WeatherAppList from './WeatherAppSearchCity';
 
 import './WeatherApp.css';
 import axios from 'axios';
@@ -9,7 +9,7 @@ class WeatherApp extends Component {
         super(props);
         this.state = {
             FilteredIDs: [],
-            ShowInput: true
+            ShowInput: true,
         }
         this.IDObjects = '';
         this.myInput = React.createRef();
@@ -34,6 +34,10 @@ class WeatherApp extends Component {
                     return(IDObj.name.includes(this.myInput.current.value))
                 })
                 return({FilteredIDs: newFilteredIDs})
+            })
+        } else {
+            this.setState(state => {
+                return({FilteredIDs: []})
             })
         }
     }

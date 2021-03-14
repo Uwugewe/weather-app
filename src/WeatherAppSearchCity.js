@@ -8,7 +8,9 @@ class WeatherAppList extends Component {
         super(props);
         this.state = {
             selectedID: '',
-            weatherConditions: {}
+            cityName: '',
+            weatherConditions: {},
+            weatherConditions2: []
         }
     }
 
@@ -17,8 +19,18 @@ class WeatherAppList extends Component {
         axios.get(`http://api.openweathermap.org/data/2.5/forecast?id=${this.state.selectedID}&appid=9ceb925d46b75ee1c3f57b6bfec0c2aa`)
         .then( res => {
             console.log(res);
+            
+            this.setState(state => {
+                return({cityName: res.data.city.name})
+            })
+            for (let obj of res.data.list){
+                
+                this.setState(state => {
+                    return(state.weatherConditions2.push(obj))
+                })
+            }
+            
             this.setState((state)=> {
-
                 return({
                     weatherConditions: {
                         'City: ': res.data.city.name,
@@ -65,6 +77,7 @@ class WeatherAppList extends Component {
                                 return({selectedID: offerObj.id})
                             });
                             this.props.RemoveFindView();
+                            this.props.HideInput();
                             setTimeout(this.getWeatherData, 0);
                         }}>Select</button>
                     </li>);
@@ -81,7 +94,8 @@ class WeatherAppList extends Component {
                         this.clearCurrentConditions();
                         this.props.HideInput();
                     }}>X</button>
-                    <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}/>
+                    <DisplaySelectedCity DisplayWeather={this.state.weatherConditions}
+                    DisplayWeatherArr={this.state.weatherConditions2} SelectedCityName={this.state.cityName}/>
                 </div>
             )
         }
