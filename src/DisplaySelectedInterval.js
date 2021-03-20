@@ -12,7 +12,10 @@ class DisplaySelectedInterval extends Component {
                 hours: [],
                 temperatures: []
             },
-            weatherConditionsThreeDays: []
+            weatherConditionsThreeDays: {
+                hours: [],
+                temperatures: []
+            }
         }
     }
 
@@ -20,6 +23,7 @@ class DisplaySelectedInterval extends Component {
         setTimeout(() => {
             this.setStateForNow();
             this.setStateForOneDay();
+            this.setStateForThreeDays();
         },500);
     }
 
@@ -51,6 +55,16 @@ class DisplaySelectedInterval extends Component {
                 )
             });
         });
+    }
+
+    setStateForThreeDays = () => {
+        for(let i = 0; i <= 3; i++) {
+            this.setState(state => {
+                return(
+                    state.weatherConditionsThreeDays.hours.push(this.props.Days.day1[i].dt_txt)
+                )
+            });
+        }
     }
 
     render() {
