@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import './DisplaySelectedInterval.css';
 
 class DisplaySelectedInterval extends Component {
     constructor(props) {
@@ -7,94 +8,84 @@ class DisplaySelectedInterval extends Component {
             weatherConditionsNow: {
 
             },
-            weatherConditionsOneDay: [],
+            weatherConditionsOneDay: {
+                hours: [],
+                temperatures: []
+            },
             weatherConditionsThreeDays: []
         }
     }
 
     componentDidMount(){
-        this.showWeather();
+        setTimeout(() => {
+            this.setStateForNow();
+            this.setStateForOneDay();
+        },500);
     }
 
-    showWeather = () => {
-        if(this.props.Interval === 'now'){
-            this.setState((state)=> {
-                return({
-                    weatherConditions: {
-                        'Perceptible temperature: ': (this.props.Days.day1[0].main.feels_like - 273.15).toFixed(2) + ' °C',
-                        'Temperature: ': Math.round(this.props.Days.day1[0].main.temp - 273.15 ).toFixed(2) + ' °C',
-                        'Pressure: ': this.props.Days.day1[0].main.pressure + ' hPa',
-                        'Humidity: ': this.props.Days.day1[0].main.humidity + ' %'
-                    }
-                })
-            });
-        } else if(this.props.Interval === 'one'){
-            // this.setState(state => {
-            //     return ({weatherConditions: []})
-            // })
-
-            // console.log('ONE');
-
-            // this.props.Days.day1.map(value => {
-            //     this.setState(state => {
-            //         return(state.weatherConditions.push(value.dt_txt)) 
-            //     })
-            // })
-            
-            let temperatures = this.props.Days.day1.map(value => {
-                return value.main.temp
+    setStateForNow = () => {
+        this.setState((state)=> {
+            return({
+                weatherConditionsNow: {
+                    'Perceptible temperature: ': (this.props.Days.day1[0].main.feels_like - 273.15).toFixed(2) + ' °C',
+                    'Temperature: ': Math.round(this.props.Days.day1[0].main.temp - 273.15 ).toFixed(2) + ' °C',
+                    'Pressure: ': this.props.Days.day1[0].main.pressure + ' hPa',
+                    'Humidity: ': this.props.Days.day1[0].main.humidity + ' %'
+                }
             })
-            console.log(temperatures);
+        });   
+    }
 
-            for(let i = 0; i<= temperatures.length; i++){
-                this.setState(state => {
-                    return({weatherConditions: {
-                        temperatures: 'xd'
-                        }
-                    })
-                })
-            }
-            
-                
-
-                // let temperaturesFeelsLike = state.dividedOnDays.day1.map(value => {
-                //     return value.main.feels_like
-                // })
-
-                // let pressure = state.dividedOnDays.day1.map(value => {
-                //     return value.main.pressure
-                // })
-
-                // let humidiyt = state.dividedOnDays.day1.map(value => {
-                //     return value.main.humidity
-                // })
-
-                // return({
-                //     weatherConditions: {
-                //     [time]: 'hehe',
-                //     }
-                // })
-        }
+    setStateForOneDay = () => {
+        this.props.Days.day1.map(value => {
+            this.setState(state => {
+                return(
+                    state.weatherConditionsOneDay.temperatures.push((value.main.temp - 273.15).toFixed(2) + ' °C')
+                )
+            });
+        });
+        this.props.Days.day1.map(value => {
+            this.setState(state => {
+                return(
+                    state.weatherConditionsOneDay.hours.push(value.dt_txt)
+                )
+            });
+        });
     }
 
     render() {
-        setTimeout(this.showWeather, 0);
-        let displayWeather = '';
+    
+        let displayWeatherNow = '';
+        let displayHours = '';
+        let displayTemperaturesForHours = '';
 
-        if(this.state.interval === 'now'){
-            displayWeather = Object.entries(this.state.weatherConditions).map((value, label) => {
+        if(this.props.Interval === 'now'){
+            displayWeatherNow = Object.entries(this.state.weatherConditionsNow).map((value, label) => {
                 return(<li key={label}>{value}</li>)
             })
-        } else if(this.state.interval === 'one'){
-            //poprawia ! "now" pokazuje polnoc nastepnego dnia. zrobic warunki w show weather
+        } else if(this.props.Interval === 'one'){
+            displayHours = this.state.weatherConditionsOneDay.hours.map((value,index) => {
+                return (
+                    <p key={index}>{value}</p>
+                )
+            });
+            displayTemperaturesForHours = this.state.weatherConditionsOneDay.temperatures.map((value,index) => {
+                return(
+                    <p key={index}>{value}</p>
+                )
+            });
+        } else if(this.props.Interval === 'three'){
+            
         }
 
-        // setTimeout(() => {
-        //     console.log((this.props.Days.day1[0].main.feels_like - 273.15).toFixed(2));
-        // },500);
-
         return (
-            <h1>DisplaySelectedInterval</h1>
+            <div>
+                {displayWeatherNow}
+                <div className='viewWeather'>
+                    <div className='hours'>{displayHours}</div>
+                    <div className='temperatures'>{displayTemperaturesForHours}</div>
+                </div>
+            </div>
             )
     }
 }

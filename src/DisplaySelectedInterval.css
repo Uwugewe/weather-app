@@ -1,0 +1,15 @@
+.viewWeather {
+    display: flex;
+    height: 50vh;
+    justify-content: space-evenly;
+}
+
+.viewWeather .hours {
+    display: flex;
+    flex-direction: column;
+}
+
+.viewWeather .temperatures {
+    display: flex;
+    flex-direction: column;
+}

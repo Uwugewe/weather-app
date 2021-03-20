@@ -85,7 +85,7 @@ class WeatherAppList extends Component {
         }
     
         return(
-            <div>
+            <div className='searchCity'>
                 {offers}
                 {showWeather}
             </div>
