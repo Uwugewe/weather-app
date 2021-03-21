@@ -14,6 +14,9 @@ class DisplaySelectedInterval extends Component {
                 hours: [],
                 temperatures: []
             },
+            weatherConditionOneDayDemo: {
+
+            },
             weatherConditionsThreeDays: {
                 hours: [],
                 temperatures: []
@@ -65,7 +68,17 @@ class DisplaySelectedInterval extends Component {
                 )
             });
         });
+
+        this.props.Days.day1.forEach(value => {
+            console.log(value);
+            console.log(value.dt_txt);
+            this.setState(state => {
+                
+                return state.weatherConditionOneDayDemo[value.dt_txt] = 'hej'
+            })
+        })
     }
+    //(value.main.temp - 273.15).toFixed(2)
 
     setStateForThreeDays = () => {
         let i = 0;
@@ -92,6 +105,9 @@ class DisplaySelectedInterval extends Component {
 
         if(this.props.Interval === 'now'){
             displayWeatherNow = Object.entries(this.state.weatherConditionsNow.conditions).map((value, label) => {
+                if(value[0] === 'Temperature: '){
+                    return(<p key={label}><h2>{value[1]}</h2></p>)
+                }
                 return(<p key={label}>{value}</p>)
             });
             return(
@@ -101,6 +117,7 @@ class DisplaySelectedInterval extends Component {
             )
             
         } else if(this.props.Interval === 'one'){
+
             displayHours = this.state.weatherConditionsOneDay.hours.map((value,index) => {
                 return (
                     <p key={index}>{value}</p>
