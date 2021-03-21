@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import DisplaySelectedInterval from './DisplaySelectedInterval';
+import DisplayViewForNow from './DisplayViewForNow';
+import DisplayViewForOne from './DisplayViewForOne';
+import DisplayViewForThree from './DisplayViewForThree';
 
 class ChangeDaysInterval extends Component {
     constructor(props) {
@@ -49,11 +51,26 @@ class ChangeDaysInterval extends Component {
     }
 
     render(){
+        let displaySelectedInterval = '';
         let cityProperties = (
             <div>
                 <h2>City: {this.props.CityProperties.name} ({this.props.CityProperties.cityCountry})</h2>
             </div>
-        )
+        );
+
+        if(this.state.interval === 'now') {
+            displaySelectedInterval = (
+                <DisplayViewForNow Day={this.state.dividedOnDays.day1}/>
+            )
+        } else if(this.state.interval === 'one') {
+            displaySelectedInterval = (
+                <DisplayViewForOne Day={this.state.dividedOnDays.day1}/>
+            )
+        } else if(this.state.interval === 'three') {
+            displaySelectedInterval = (
+                <DisplayViewForThree Days={this.state.dividedOnDays}/>
+            )
+        }
 
         return(
             <div>
@@ -65,7 +82,7 @@ class ChangeDaysInterval extends Component {
                         <option value="three">3 days</option>
                     </select>
                 </label>
-                <DisplaySelectedInterval Days={this.state.dividedOnDays} Interval={this.state.interval}/>
+                {displaySelectedInterval}
             </div>
         )
     }

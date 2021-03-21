@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import WeatherAppList from './WeatherAppSearchCity';
+import logo from './logo.svg';
 
 import './WeatherApp.css';
 import axios from 'axios';
@@ -61,7 +62,7 @@ class WeatherApp extends Component {
         if(this.state.ShowInput){
             showInput = (
                 <label>Search city: <br></br>
-                <input type='text' id='search' ref={this.myInput} placeholder='Search city' onChange={() => {
+                <input className='SearchInput' type='text' id='search' ref={this.myInput} onChange={() => {
                     this.filterIDs();
                     }} />
                 </label>);
@@ -71,7 +72,8 @@ class WeatherApp extends Component {
 
         return(
             <div className='WeatherApp'>
-                <h1>Weather App</h1>
+                <img src={logo} className="App-logo" alt="logo" />
+                <h1>Weather App by Arturrro</h1>
                 {showInput}
                 <WeatherAppList Filtered={this.state.FilteredIDs} RemoveFindView={this.removeFindView} HideInput={this.hideInput}/>
             </div>

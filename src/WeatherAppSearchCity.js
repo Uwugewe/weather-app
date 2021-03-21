@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ChangeDaysInterval from './ChangeDaysInterval';
 
 import axios from 'axios';
+import './WeatherAppSearchCity.css';
 
 class WeatherAppList extends Component {
     constructor(props) {
@@ -44,15 +45,15 @@ class WeatherAppList extends Component {
             let ShowCityLi = '';
             if(!offerObj.state) {
                 ShowCityLi = 
-                    (<li key={offerObj.id}>
-                        {offerObj.name} ({offerObj.country})<button onClick={() => {
-                            this.setState((state) => {
-                                return({selectedID: offerObj.id})
-                            });
-                            this.props.RemoveFindView();
-                            this.props.HideInput();
-                            setTimeout(this.getWeatherData, 0);
-                        }}>Select</button>
+                    (<li key={offerObj.id} onClick={() => {
+                        this.setState((state) => {
+                            return({selectedID: offerObj.id})
+                        });
+                        this.props.RemoveFindView();
+                        this.props.HideInput();
+                        setTimeout(this.getWeatherData, 0);
+                    }}>
+                        {offerObj.name} ({offerObj.country})
                     </li>);
             } else {
                 ShowCityLi = 
@@ -74,19 +75,21 @@ class WeatherAppList extends Component {
 
         if(this.state.weatherConditions.length !== 0){
             showWeather = (
-                <div>
-                    <button className='back-button' onClick={() => {
+                <div className='DisplayInterval'>
+                    <button className='BackButton' onClick={() => {
                         this.clearCurrentConditions();
                         this.props.HideInput();
-                    }}>X</button>
+                    }}>back</button>
                     <ChangeDaysInterval DisplayWeatherArr={this.state.weatherConditions} CityProperties={this.state.cityProperties}/>
                 </div>
             )
         }
     
         return(
-            <div className='searchCity'>
-                {offers}
+            <div>
+                <div className='SelectCity'>
+                    {offers}
+                </div>
                 {showWeather}
             </div>
         )

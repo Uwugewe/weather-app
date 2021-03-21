@@ -1,38 +1,29 @@
-.viewWeather {
+.ViewWeatherForOne {
+    margin-top: 20px;
     display: flex;
-    height: 50vh;
+    height: 40vh;
     justify-content: space-evenly;
-    padding: 0 20%;
+    flex-direction: row;
 }
 
-.viewWeather .hours {
+.BOX-ViewForOne {
+    margin: 0 10px;
+    width: 302px;
+    padding: 10px 0;
+    border: 1px solid white;
     display: flex;
-    flex-direction: column;
-}
-
-.viewWeather .temperatures {
-    display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 
 p {
     margin: 0;
+    color: white;
 }
 
-.chart{
-    width: 100vw;
-}
-
-.chart .hoursThreeDays {
-    display: flex;
-    flex-direction: row;
-}
-
-.chart .temperaturesForChart {
-    display: flex;
-    flex-direction: row;
-}
-
-.hour {
-    width: 100px;
+.Description {
+    height: 64px;
+    /* display: flex;
+    align-items: center; */
+    text-transform: capitalize;
+    font-size: 1.5em;
 }

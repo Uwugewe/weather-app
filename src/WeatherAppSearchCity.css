@@ -1,0 +1,40 @@
+.SelectCity {
+    margin-top: 20px;
+    padding: 0 20%;
+}
+
+.SelectCity li {
+    list-style: none;
+    font-size: 1.5em;
+    transition: .25s ease;
+}
+
+.SelectCity li:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+    font-size: 1.6em;
+}
+
+.DisplayInterval {
+    position: relative;
+}
+
+.DisplayInterval .BackButton {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: transparent;
+    color: white;
+    text-transform: uppercase;
+    border: 1px solid white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.DisplayInterval .BackButton:hover {
+    box-shadow: 0 0 6px rgb(35 173 255);
+}
+
+.DisplayInterval .BackButton:focus {
+    outline: none;
+}

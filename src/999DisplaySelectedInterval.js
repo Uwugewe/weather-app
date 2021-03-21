@@ -1,6 +1,5 @@
-import axios from 'axios';
-import React, {Component} from 'react';
-import './DisplaySelectedInterval.css';
+// import React, {Component} from 'react';
+// import './DisplaySelectedInterval.css';
 
 class DisplaySelectedInterval extends Component {
     constructor(props) {
@@ -26,30 +25,26 @@ class DisplaySelectedInterval extends Component {
 
     componentDidMount(){
         setTimeout(() => {
-            this.getIcons();
             this.setStateForNow();
             this.setStateForOneDay();
             this.setStateForThreeDays();
         },500);
     }
 
-    getIcons = () => {
-        axios.get('http://openweathermap.org/img/wn/10d@2x.png')
-        .then( res => {
-            console.log(res);
-        })
-    }
-
     setStateForNow = () => {
         this.setState((state)=> {
-            return(
-                state.weatherConditionsNow.conditions = {
+            console.log(state);
+            return({weatherConditionsNow: {
+                icon: `http://openweathermap.org/img/wn/${this.props.Days.day1[0].weather[0].icon}@2x.png`,
+                description: this.props.Days.day1[0].weather[0].description,
+                conditions: {
                     'Temperature: ': Math.round(this.props.Days.day1[0].main.temp - 273.15 ).toFixed(2) + ' °C',
                     'Perceptible temperature: ': (this.props.Days.day1[0].main.feels_like - 273.15).toFixed(2) + ' °C',
                     'Pressure: ': this.props.Days.day1[0].main.pressure + ' hPa',
                     'Humidity: ': this.props.Days.day1[0].main.humidity + ' %'
+                    }
                 }
-            )
+            })
         });  
     }
 
@@ -72,13 +67,9 @@ class DisplaySelectedInterval extends Component {
         this.props.Days.day1.forEach(value => {
             console.log(value);
             console.log(value.dt_txt);
-            this.setState(state => {
-                
-                return state.weatherConditionOneDayDemo[value.dt_txt] = 'hej'
-            })
-        })
+            this.state.weatherConditionOneDayDemo[value.dt_txt] = (value.main.temp - 273.15).toFixed(2);
+        });
     }
-    //(value.main.temp - 273.15).toFixed(2)
 
     setStateForThreeDays = () => {
         let i = 0;
@@ -102,16 +93,23 @@ class DisplaySelectedInterval extends Component {
         let displayWeatherNow = '';
         let displayHours = '';
         let displayTemperaturesForHours = '';
+        let icon = '';
+        let description = '';
 
         if(this.props.Interval === 'now'){
+            icon = <img src={this.state.weatherConditionsNow.icon}/>;
+            description = <p className='Description'>{this.state.weatherConditionsNow.description}</p>;
             displayWeatherNow = Object.entries(this.state.weatherConditionsNow.conditions).map((value, label) => {
                 if(value[0] === 'Temperature: '){
                     return(<p key={label}><h2>{value[1]}</h2></p>)
                 }
                 return(<p key={label}>{value}</p>)
             });
+
             return(
                 <div>
+                    {icon}
+                    {description}
                     {displayWeatherNow}
                 </div>
             )
@@ -120,7 +118,7 @@ class DisplaySelectedInterval extends Component {
 
             displayHours = this.state.weatherConditionsOneDay.hours.map((value,index) => {
                 return (
-                    <p key={index}>{value}</p>
+                    <span key={index}>{value.substr(10)}</span>
                 )
             });
             displayTemperaturesForHours = this.state.weatherConditionsOneDay.temperatures.map((value,index) => {
@@ -131,9 +129,9 @@ class DisplaySelectedInterval extends Component {
 
             return (
                 <div>
-                    <div className='viewWeather'>
-                        <div className='hours'>{displayHours}</div>
-                        <div className='temperatures'>{displayTemperaturesForHours}</div>
+                    <div className='ViewWeatherForOne'>
+                        <div className='Hours'>{displayHours}</div>
+                        {/* <div className='Temperatures'>{displayTemperaturesForHours}</div> */}
                     </div>
                 </div>
             )
@@ -167,4 +165,4 @@ class DisplaySelectedInterval extends Component {
     }
 }
 
-export default DisplaySelectedInterval
+// export default DisplaySelectedInterval
