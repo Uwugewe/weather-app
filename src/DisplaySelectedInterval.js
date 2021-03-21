@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {Component} from 'react';
 import './DisplaySelectedInterval.css';
 
@@ -6,7 +7,8 @@ class DisplaySelectedInterval extends Component {
         super(props);
         this.state = {
             weatherConditionsNow: {
-
+                icon: '',
+                conditions: {}
             },
             weatherConditionsOneDay: {
                 hours: [],
@@ -21,23 +23,31 @@ class DisplaySelectedInterval extends Component {
 
     componentDidMount(){
         setTimeout(() => {
+            this.getIcons();
             this.setStateForNow();
             this.setStateForOneDay();
             this.setStateForThreeDays();
         },500);
     }
 
+    getIcons = () => {
+        axios.get('http://openweathermap.org/img/wn/10d@2x.png')
+        .then( res => {
+            console.log(res);
+        })
+    }
+
     setStateForNow = () => {
         this.setState((state)=> {
-            return({
-                weatherConditionsNow: {
-                    'Perceptible temperature: ': (this.props.Days.day1[0].main.feels_like - 273.15).toFixed(2) + ' °C',
+            return(
+                state.weatherConditionsNow.conditions = {
                     'Temperature: ': Math.round(this.props.Days.day1[0].main.temp - 273.15 ).toFixed(2) + ' °C',
+                    'Perceptible temperature: ': (this.props.Days.day1[0].main.feels_like - 273.15).toFixed(2) + ' °C',
                     'Pressure: ': this.props.Days.day1[0].main.pressure + ' hPa',
                     'Humidity: ': this.props.Days.day1[0].main.humidity + ' %'
                 }
-            })
-        });   
+            )
+        });  
     }
 
     setStateForOneDay = () => {
@@ -58,12 +68,19 @@ class DisplaySelectedInterval extends Component {
     }
 
     setStateForThreeDays = () => {
-        for(let i = 0; i <= 3; i++) {
-            this.setState(state => {
-                return(
-                    state.weatherConditionsThreeDays.hours.push(this.props.Days.day1[i].dt_txt)
-                )
-            });
+        let i = 0;
+        for (let [key, value] of Object.entries(this.props.Days)){
+            i += 1;
+            if(i >= 2 && i <= 4 ) {
+                value.forEach(underValue => {
+                    this.setState(state => {
+                        return(
+                            state.weatherConditionsThreeDays.hours.push(underValue.dt_txt),
+                            state.weatherConditionsThreeDays.temperatures.push((underValue.main.temp - 273.15).toFixed(2))
+                        )
+                    });
+                });
+            }
         }
     }
 
@@ -74,9 +91,15 @@ class DisplaySelectedInterval extends Component {
         let displayTemperaturesForHours = '';
 
         if(this.props.Interval === 'now'){
-            displayWeatherNow = Object.entries(this.state.weatherConditionsNow).map((value, label) => {
-                return(<li key={label}>{value}</li>)
-            })
+            displayWeatherNow = Object.entries(this.state.weatherConditionsNow.conditions).map((value, label) => {
+                return(<p key={label}>{value}</p>)
+            });
+            return(
+                <div>
+                    {displayWeatherNow}
+                </div>
+            )
+            
         } else if(this.props.Interval === 'one'){
             displayHours = this.state.weatherConditionsOneDay.hours.map((value,index) => {
                 return (
@@ -88,19 +111,42 @@ class DisplaySelectedInterval extends Component {
                     <p key={index}>{value}</p>
                 )
             });
-        } else if(this.props.Interval === 'three'){
-            
-        }
 
-        return (
-            <div>
-                {displayWeatherNow}
-                <div className='viewWeather'>
-                    <div className='hours'>{displayHours}</div>
-                    <div className='temperatures'>{displayTemperaturesForHours}</div>
+            return (
+                <div>
+                    <div className='viewWeather'>
+                        <div className='hours'>{displayHours}</div>
+                        <div className='temperatures'>{displayTemperaturesForHours}</div>
+                    </div>
                 </div>
-            </div>
             )
+
+        } else if(this.props.Interval === 'three'){
+            displayHours = this.state.weatherConditionsThreeDays.hours.map((value, index) => {
+                return (
+                    <div className='hour'><p key={index}>{value}</p></div>
+                )
+            });
+            displayTemperaturesForHours = this.state.weatherConditionsThreeDays.temperatures.map((value,index) => {
+                return(
+                    <div className='hour'><p key={index}>{Math.round(value)}°C</p></div>
+                )
+            });
+
+            return(
+                <div className='chart'>
+                    <div className='temperaturesForChart'>
+                        {displayTemperaturesForHours}
+                    </div>
+                    <div className='hoursThreeDays'>
+                        {displayHours}
+                    </div>
+                </div>
+            )
+        }
+        return(
+            <div></div>
+        )
     }
 }
 

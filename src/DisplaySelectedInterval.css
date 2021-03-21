@@ -18,3 +18,21 @@
 p {
     margin: 0;
 }
+
+.chart{
+    width: 100vw;
+}
+
+.chart .hoursThreeDays {
+    display: flex;
+    flex-direction: row;
+}
+
+.chart .temperaturesForChart {
+    display: flex;
+    flex-direction: row;
+}
+
+.hour {
+    width: 100px;
+}
