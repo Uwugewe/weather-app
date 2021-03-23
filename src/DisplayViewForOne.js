@@ -49,6 +49,7 @@ class DisplayViewForOne extends Component {
 
         return (
             <div>
+                <h2>{(this.props.Day[0].dt_txt).substr(0,10)}</h2>
                 <div className='ViewWeatherForOne'>
                     {displayDemo}
                 </div>

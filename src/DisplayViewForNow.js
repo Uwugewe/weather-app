@@ -6,6 +6,7 @@ class DisplayViewForNow extends Component {
         super(props);
         this.state = {
             weatherConditionsNow: {
+                whichDay: '',
                 icon: '',
                 conditions: {}
             }
@@ -22,6 +23,7 @@ class DisplayViewForNow extends Component {
         this.setState((state)=> {
             console.log(state);
             return({weatherConditionsNow: {
+                whichDay: this.props.Day[0].dt_txt,
                 icon: `http://openweathermap.org/img/wn/${this.props.Day[0].weather[0].icon}@2x.png`,
                 description: this.props.Day[0].weather[0].description,
                 conditions: {
@@ -53,6 +55,7 @@ class DisplayViewForNow extends Component {
 
         return(
             <div>
+                <h2>{(this.state.weatherConditionsNow.whichDay).substr(0,10)}</h2>
                 {icon}
                 {description}
                 {displayWeatherNow}
