@@ -50,7 +50,7 @@ class DisplayViewForThree extends Component {
         displayFirstDay = Object.entries(this.state.twojaStara).map(value => {
             console.log(value);
             return(
-                <li>kurwa</li>
+                <li>test</li>
             )
         });
 
