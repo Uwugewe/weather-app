@@ -34,6 +34,9 @@ class ChangeDaysInterval extends Component {
 
     divideWeatherOnDays = () => {
         let dayNumber = 0;
+        let joinDay1 = [];
+        let joinDay2 = [];
+        let joinDay3 = [];
             
         this.props.DisplayWeatherArr.forEach((obj, index) => {
             if(obj.dt_txt.includes('00:00:00')){
@@ -42,7 +45,14 @@ class ChangeDaysInterval extends Component {
                 for(let i = index; i<=index+7; i++) {
                     if(this.props.DisplayWeatherArr[i] !== undefined){
                         this.setState(state => {
-                            return(state.dividedOnDays['day'+dayNumber].push(this.props.DisplayWeatherArr[i]))
+                            if(dayNumber == 1){
+                                joinDay1.push(this.props.DisplayWeatherArr[i]);
+                                return(state.dividedOnDays.day1.push(this.props.DisplayWeatherArr[i]))
+                            } else if(dayNumber == 2) {
+                                return(state.dividedOnDays.day2.push(this.props.DisplayWeatherArr[i]))
+                            } else {
+                                return(state.dividedOnDays.day3.push(this.props.DisplayWeatherArr[i]))
+                            }
                         });
                     }
                 }

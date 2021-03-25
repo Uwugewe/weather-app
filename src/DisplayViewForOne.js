@@ -35,7 +35,7 @@ class DisplayViewForOne extends Component {
     render() {
     
         let displayDemo = '';
-
+        
         displayDemo = Object.entries(this.state.weatherConditionsOneDayDemo).map((value, i) => {
             return(
                 <div className='BOX-ViewForOne'>
