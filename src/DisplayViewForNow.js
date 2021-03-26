@@ -14,23 +14,21 @@ class DisplayViewForNow extends Component {
     }
 
     componentDidMount(){
-        setTimeout(() => {
-            this.setStateForNow();
-        },500);
+        this.setStateForNow();
     }
 
     setStateForNow = () => {
         this.setState((state)=> {
             console.log(state);
             return({weatherConditionsNow: {
-                whichDay: this.props.Day[0].dt_txt,
-                icon: `http://openweathermap.org/img/wn/${this.props.Day[0].weather[0].icon}@2x.png`,
-                description: this.props.Day[0].weather[0].description,
+                whichDay: this.props.Day.dt_txt,
+                icon: `http://openweathermap.org/img/wn/${this.props.Day.weather[0].icon}@2x.png`,
+                description: this.props.Day.weather[0].description,
                 conditions: {
-                    'Temperature: ': Math.round(this.props.Day[0].main.temp - 273.15 ).toFixed(2) + ' °C',
-                    'Perceptible temperature: ': (this.props.Day[0].main.feels_like - 273.15).toFixed(2) + ' °C',
-                    'Pressure: ': this.props.Day[0].main.pressure + ' hPa',
-                    'Humidity: ': this.props.Day[0].main.humidity + ' %'
+                    'Temperature: ': Math.round(this.props.Day.main.temp - 273.15 ).toFixed(2) + ' °C',
+                    'Perceptible temperature: ': (this.props.Day.main.feels_like - 273.15).toFixed(2) + ' °C',
+                    'Pressure: ': this.props.Day.main.pressure + ' hPa',
+                    'Humidity: ': this.props.Day.main.humidity + ' %'
                     }
                 }
             })

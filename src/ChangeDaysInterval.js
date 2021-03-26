@@ -21,43 +21,64 @@ class ChangeDaysInterval extends Component {
 
     componentDidMount() {
         this.selectIntervalValue();
-        setTimeout(this.divideWeatherOnDays,0);
+        this.divideWeatherOnDays();
     }
 
     selectIntervalValue = () => {
-        setTimeout(() => {
-            this.setState(state => {
-                return({interval: `${this.selectInterval.current.value}`})
-            });
-        }, 0);
+        this.setState(state => {
+            return({interval: `${this.selectInterval.current.value}`})
+        });
     }
 
     divideWeatherOnDays = () => {
         let dayNumber = 0;
-        let joinDay1 = [];
-        let joinDay2 = [];
-        let joinDay3 = [];
-            
-        this.props.DisplayWeatherArr.forEach((obj, index) => {
-            if(obj.dt_txt.includes('00:00:00')){
-                dayNumber += 1;
+        let allData = this.props.DisplayWeatherArr;
+        let allDataDividedOnDays = [];
 
-                for(let i = index; i<=index+7; i++) {
-                    if(this.props.DisplayWeatherArr[i] !== undefined){
-                        this.setState(state => {
-                            if(dayNumber == 1){
-                                joinDay1.push(this.props.DisplayWeatherArr[i]);
-                                return(state.dividedOnDays.day1.push(this.props.DisplayWeatherArr[i]))
-                            } else if(dayNumber == 2) {
-                                return(state.dividedOnDays.day2.push(this.props.DisplayWeatherArr[i]))
-                            } else {
-                                return(state.dividedOnDays.day3.push(this.props.DisplayWeatherArr[i]))
-                            }
-                        });
-                    }
-                }
+        for(let obj of allData){
+            
+            if(obj.dt_txt.includes('00:00:00')){
+                ++dayNumber;
+            }
+
+            obj.day = dayNumber;
+            allDataDividedOnDays.push(obj);
+        }
+
+        let nowArr = allDataDividedOnDays[0];
+
+        let firstDayArr = allDataDividedOnDays.filter(obj => {
+            if(obj.day === 1){
+                return obj
             }
         });
+
+        let secondDayArr = allDataDividedOnDays.filter(obj => {
+            if(obj.day === 2){
+                return obj
+            }
+        });
+
+        let thirdDayArr = allDataDividedOnDays.filter(obj => {
+            if(obj.day === 3){
+                return obj
+            }
+        });
+
+        let fourthDayArr = allDataDividedOnDays.filter(obj => {
+            if(obj.day === 4){
+                return obj
+            }
+        });
+
+        this.setState({dividedOnDays: {
+            nowArr,
+            firstDayArr,
+            secondDayArr,
+            thirdDayArr,
+            fourthDayArr
+        }});
+        console.log(nowArr);
     }
 
     render(){
@@ -70,11 +91,11 @@ class ChangeDaysInterval extends Component {
 
         if(this.state.interval === 'now') {
             displaySelectedInterval = (
-                <DisplayViewForNow Day={this.state.dividedOnDays.day1}/>
+                <DisplayViewForNow Day={this.state.dividedOnDays.nowArr}/>
             )
         } else if(this.state.interval === 'one') {
             displaySelectedInterval = (
-                <DisplayViewForOne Day={this.state.dividedOnDays.day1}/>
+                <DisplayViewForOne Day={this.state.dividedOnDays.firstDayArr}/>
             )
         } else if(this.state.interval === 'three') {
             displaySelectedInterval = (
