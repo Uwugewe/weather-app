@@ -99,7 +99,7 @@ class ChangeDaysInterval extends Component {
             )
         } else if(this.state.interval === 'three') {
             displaySelectedInterval = (
-                <DisplayViewForThree Days={this.state.dividedOnDays}/>
+                <DisplayViewForThree Day1={this.state.dividedOnDays.secondDayArr} Day2={this.state.dividedOnDays.thirdDayArr} Day3={this.state.dividedOnDays.fourthDayArr}/>
             )
         }
 

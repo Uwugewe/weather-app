@@ -11,8 +11,8 @@ function DisplayViewForOne(props) {
         return (
             <div className='BOX-ViewForOne'>
                 <p>{(value.dt_txt).substr(11)}</p>
-                <h2>{(value.main.temp - 273.15).toFixed(2)}</h2>
-                <p>{value.weather[0].description}</p>
+                <h2>{(value.main.temp - 273.15).toFixed(2)} °C</h2>
+                <p className='Description'>{value.weather[0].description}</p>
                 <img src={imgSrc} />
             </div>
         )
