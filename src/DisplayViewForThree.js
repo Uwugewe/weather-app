@@ -22,7 +22,7 @@ function DisplayViewForThree(props) {
                     <div className='BOX-ViewForOne'>
                         <p>{hour}</p>
                         <h2>{temp} °C</h2>
-                        <p>{description}</p>
+                        <p className='Description'>{description}</p>
                         <img src={imgSrc}/>
                     </div>
                 )

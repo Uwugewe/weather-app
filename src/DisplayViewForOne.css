@@ -1,0 +1,60 @@
+
+.ViewWeatherForOne {
+    position: relative;
+    height: 40vh;
+    width: 100vw;
+    overflow-x: scroll;
+}
+
+.ScrollContainer {
+    position: absolute;
+    left: 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.ScrollContainer .BOX-ViewForOne {
+    margin: 0 10px;
+    padding: 10px 0;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+@media screen and (min-width: 768px) {
+
+    .ScrollContainer .BOX-ViewForOne {
+        width: 120px;  
+    }
+
+    .ViewWeatherForOne {
+        display: flex;
+        justify-content: center;
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    .ViewWeatherForOne {
+        overflow-x: hidden;
+    }
+
+    .ScrollContainer {
+        left: unset;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+
+    .ScrollContainer .BOX-ViewForOne {
+        width: 120px;  
+    }
+
+    .ViewWeatherForOne {
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        width: auto;
+    }
+}

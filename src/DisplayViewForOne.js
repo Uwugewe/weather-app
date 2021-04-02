@@ -1,4 +1,5 @@
 import React from 'react';
+import './DisplayViewForOne.css';
 
 function DisplayViewForOne(props) {
 
@@ -22,7 +23,9 @@ function DisplayViewForOne(props) {
         <div>
             <h2>{(props.Day[0].dt_txt).substr(0, 10)}</h2>
             <div className='ViewWeatherForOne'>
-                {displayDemo}
+                <div className='ScrollContainer'>
+                    {displayDemo}
+                </div>
             </div>
         </div>
     )

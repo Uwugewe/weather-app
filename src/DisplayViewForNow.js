@@ -1,5 +1,5 @@
 import React from 'react';
-import './DisplaySelectedInterval.css';
+import './DisplayViewForNow.css';
 
 function DisplayViewForNow(props) {
 
