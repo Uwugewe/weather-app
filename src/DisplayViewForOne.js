@@ -6,11 +6,11 @@ function DisplayViewForOne(props) {
     let displayDemo = '';
     let imgSrc = '';
 
-    displayDemo = props.Day.map(value => {
+    displayDemo = props.Day.map((value, key) => {
         imgSrc = `http://openweathermap.org/img/wn/${value.weather[0].icon}@2x.png`
 
         return (
-            <div className='BOX-ViewForOne'>
+            <div key={key} className='BOX-ViewForOne'>
                 <p>{(value.dt_txt).substr(11)}</p>
                 <h2>{(value.main.temp - 273.15).toFixed(2)} °C</h2>
                 <p className='Description'>{value.weather[0].description}</p>

@@ -5,7 +5,7 @@ class DisplayViewForThree extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            DayNr: 1
+            dayNr: 1
         };
     }
 
@@ -19,16 +19,16 @@ class DisplayViewForThree extends Component {
         let imgSrc = '';
         let whichDay = '';
 
-        if (this.state.DayNr === 1) {
+        if (this.state.dayNr === 1) {
             whichDay =  this.props.Day1[0].dt_txt.substr(0,10);
-            displayOneDay = this.props.Day1.map(value => {
+            displayOneDay = this.props.Day1.map((value, key) => {
                 imgSrc = `http://openweathermap.org/img/wn/${value.weather[0].icon}@2x.png`;
                 hour = value.dt_txt.substr(11);
                 temp = (value.main.temp - 273.15).toFixed(2);
                 description = value.weather[0].description;
 
                 return (
-                    <div className='BOX-ViewForOne'>
+                    <div key={key} className='BOX-ViewForOne'>
                         <p>{hour}</p>
                         <h2>{temp} °C</h2>
                         <p className='Description'>{description}</p>
@@ -36,16 +36,16 @@ class DisplayViewForThree extends Component {
                     </div>
                 )
             });
-        } else if (this.state.DayNr === 2) {
+        } else if (this.state.dayNr === 2) {
             whichDay =  this.props.Day2[0].dt_txt.substr(0,10);
-            displayOneDay = this.props.Day2.map(value => {
+            displayOneDay = this.props.Day2.map((value, key) => {
                 imgSrc = `http://openweathermap.org/img/wn/${value.weather[0].icon}@2x.png`;
                 hour = value.dt_txt.substr(11);
                 temp = (value.main.temp - 273.15).toFixed(2);
                 description = value.weather[0].description;
 
                 return (
-                    <div className='BOX-ViewForOne'>
+                    <div key={key} className='BOX-ViewForOne'>
                         <p>{hour}</p>
                         <h2>{temp} °C</h2>
                         <p className='Description'>{description}</p>
@@ -53,16 +53,16 @@ class DisplayViewForThree extends Component {
                     </div>
                 )
             });
-        } else if (this.state.DayNr === 3) {
+        } else if (this.state.dayNr === 3) {
             whichDay =  this.props.Day3[0].dt_txt.substr(0,10);
-            displayOneDay = this.props.Day3.map(value => {
+            displayOneDay = this.props.Day3.map((value, key) => {
                 imgSrc = `http://openweathermap.org/img/wn/${value.weather[0].icon}@2x.png`;
                 hour = value.dt_txt.substr(11);
                 temp = (value.main.temp - 273.15).toFixed(2);
                 description = value.weather[0].description;
 
                 return (
-                    <div className='BOX-ViewForOne'>
+                    <div key={key} className='BOX-ViewForOne'>
                         <p>{hour}</p>
                         <h2>{temp} °C</h2>
                         <p className='Description'>{description}</p>
@@ -76,15 +76,15 @@ class DisplayViewForThree extends Component {
             <div>
                 <div className='ChangeForThreeDaysRow'>
                     <button className='skipDay' onClick={() => {
-                        if (this.state.DayNr !== 1) {
+                        if (this.state.dayNr !== 1) {
                             this.setState(state => {
-                                return ({ DayNr: state.DayNr - 1 })
+                                return ({ dayNr: state.dayNr - 1 })
                             });
                         }
                     }}>prev</button><h2>{whichDay}</h2><button className='skipDay' onClick={() => {
-                        if (this.state.DayNr !== 3) {
+                        if (this.state.dayNr !== 3) {
                             this.setState(state => {
-                                return ({ DayNr: state.DayNr + 1 })
+                                return ({ dayNr: state.dayNr + 1 })
                             });
                         }
                     }}>next</button></div>

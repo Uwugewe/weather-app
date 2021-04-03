@@ -25,9 +25,7 @@ class ChangeDaysInterval extends Component {
     }
 
     selectIntervalValue = () => {
-        this.setState(state => {
-            return({interval: `${this.selectInterval.current.value}`})
-        });
+        this.setState({interval: `${this.selectInterval.current.value}`});
     }
 
     divideWeatherOnDays = () => {

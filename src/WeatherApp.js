@@ -10,8 +10,8 @@ class WeatherApp extends Component {
     constructor(props){
         super(props);
         this.state = {
-            FilteredIDs: [],
-            ShowInput: true,
+            filteredIDs: [],
+            showInput: true,
         }
         this.IDObjects = '';
         this.myInput = React.createRef();
@@ -23,7 +23,7 @@ class WeatherApp extends Component {
 
     getCitiesID = () => {
         axios.get('./city.list.json')
-        .then( res => {
+        .then(res => {
             this.IDObjects = res.data;
         });
     }
@@ -31,36 +31,32 @@ class WeatherApp extends Component {
     filterIDs = () => {
         this.myInput.current.value = this.myInput.current.value.trim().charAt(0).toUpperCase()+this.myInput.current.value.slice(1).toLowerCase();
         if(this.myInput.current.value.length > 4) {
-            this.setState((state) => {
+            this.setState(() => {
                 let newFilteredIDs = this.IDObjects.filter((IDObj) => {
                     return(IDObj.name.includes(this.myInput.current.value))
                 })
-                return({FilteredIDs: newFilteredIDs})
+                return({filteredIDs: newFilteredIDs})
             })
         } else {
-            this.setState(state => {
-                return({FilteredIDs: []})
-            })
+            this.setState({filteredIDs: []})
         }
     }
 
     removeFindView = () => {
-        this.setState((state)=> {
-            return({FilteredIDs: []})
-        });
+        this.setState({filteredIDs: []});
         this.myInput.current.value = '';
     }
 
     hideInput = () => {
         this.setState((state) => {
-            return ({ShowInput: !state.ShowInput});
+            return ({showInput: !state.showInput});
         })
     }
 
     render() {
         let showInput = ''
 
-        if(this.state.ShowInput){
+        if(this.state.showInput){
             showInput = (
                 <label>Search city: <br></br>
                 <input className='SearchInput' type='text' id='search' ref={this.myInput} onChange={() => {
@@ -79,7 +75,7 @@ class WeatherApp extends Component {
                 <img src={logo} className="App-logo" alt="logo" />
                 <h1>Weather App by Artur Ksybek</h1>
                 {showInput}
-                <WeatherAppList Filtered={this.state.FilteredIDs} RemoveFindView={this.removeFindView} HideInput={this.hideInput}/>
+                <WeatherAppList Filtered={this.state.filteredIDs} RemoveFindView={this.removeFindView} HideInput={this.hideInput}/>
             </div>
         )
     }

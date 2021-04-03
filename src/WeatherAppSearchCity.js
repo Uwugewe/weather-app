@@ -19,16 +19,14 @@ class WeatherAppList extends Component {
         .then( res => {
             let joinState = [];
             
-            this.setState(state => {
-                return({
-                    cityProperties: {
-                        name: res.data.city.name,
-                        cityCountry: res.data.city.country
-                    }
-                })
+            this.setState({
+                cityProperties: {
+                    name: res.data.city.name,
+                    cityCountry: res.data.city.country
+                }
             });
             
-            this.setState(state => {
+            this.setState(() => {
                 joinState = joinState.concat(res.data.list);
                 return({weatherConditions: joinState})
             });
@@ -36,21 +34,16 @@ class WeatherAppList extends Component {
     }
 
     clearCurrentConditions = () => {
-        this.setState(state => {
-            return({weatherConditions: [],
-                selectedID: ''})
-        });
+        this.setState({weatherConditions: [], selectedID: ''});
     }
     
     render() {
         let offers = this.props.Filtered.map((offerObj) => {
-            let ShowCityLi = '';
+            let showCityLi = '';
             if(!offerObj.state) {
-                ShowCityLi = 
+                showCityLi = 
                     (<li key={offerObj.id} onClick={() => {
-                        this.setState((state) => {
-                            return({selectedID: offerObj.id})
-                        });
+                        this.setState({selectedID: offerObj.id});
                         this.props.RemoveFindView();
                         this.props.HideInput();
                         setTimeout(this.getWeatherData, 0);
@@ -58,19 +51,17 @@ class WeatherAppList extends Component {
                         {offerObj.name} ({offerObj.country})
                     </li>);
             } else {
-                ShowCityLi = 
+                showCityLi = 
                     (<li key={offerObj.id}>
                         {offerObj.name} ({offerObj.country}) State: {offerObj.state} <button onClick={() => {
-                            this.setState((state) => {
-                                return({selectedID: offerObj.id})
-                            });
+                            this.setState({selectedID: offerObj.id});
                             this.props.RemoveFindView();
                             this.props.HideInput();
                             setTimeout(this.getWeatherData, 0);
                         }}>Select</button>
                     </li>);
             }
-            return(ShowCityLi)
+            return(showCityLi)
         });
 
         let showWeather = '';
