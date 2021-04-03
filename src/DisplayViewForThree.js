@@ -1,71 +1,102 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './DisplayViewForThree.css';
 
-function DisplayViewForThree(props) {
+class DisplayViewForThree extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            DayNr: 1
+        };
+    }
 
-        let displayForTheeDays = '';
+    render() {
+
         let displayOneDay = '';
-        let displayDayALT = '';
 
-        let DayNr = 1;
+        let hour = '';
+        let temp = '';
+        let description = '';
+        let imgSrc = '';
+        let whichDay = '';
 
-        displayForTheeDays = Object.entries(props).map(value => {
-            let hour = '';
-            let temp = '';
-            let description = '';
-            let imgSrc = '';
-            let day = value[1][0].dt_txt.substr(0,10);
+        if (this.state.DayNr === 1) {
+            whichDay =  this.props.Day1[0].dt_txt.substr(0,10);
+            displayOneDay = this.props.Day1.map(value => {
+                imgSrc = `http://openweathermap.org/img/wn/${value.weather[0].icon}@2x.png`;
+                hour = value.dt_txt.substr(11);
+                temp = (value.main.temp - 273.15).toFixed(2);
+                description = value.weather[0].description;
 
-            displayOneDay = value[1].map(underValue => {
-                imgSrc = `http://openweathermap.org/img/wn/${underValue.weather[0].icon}@2x.png`;
-                hour = underValue.dt_txt.substr(11);
-                temp = (underValue.main.temp - 273.15).toFixed(2);
-                description = underValue.weather[0].description;
-
-                return(
+                return (
                     <div className='BOX-ViewForOne'>
                         <p>{hour}</p>
                         <h2>{temp} °C</h2>
                         <p className='Description'>{description}</p>
-                        <img src={imgSrc}/>
+                        <img src={imgSrc} />
                     </div>
                 )
-                
             });
-            if (DayNr === 1){
-                displayDayALT = props.Day1.map(value => {
-                    console.log(value);
-                });
-            }
+        } else if (this.state.DayNr === 2) {
+            whichDay =  this.props.Day2[0].dt_txt.substr(0,10);
+            displayOneDay = this.props.Day2.map(value => {
+                imgSrc = `http://openweathermap.org/img/wn/${value.weather[0].icon}@2x.png`;
+                hour = value.dt_txt.substr(11);
+                temp = (value.main.temp - 273.15).toFixed(2);
+                description = value.weather[0].description;
 
-            return(
-                <div>
-                    <div className='ChangeForThreeDaysRow'>
-                        <button onClick={() => {
-                            if (DayNr !== 1) {
-                                DayNr--;
-                            }
-                            console.log(DayNr);
-                        }}>prev</button><h2>{day}</h2><button onClick={() => {
-                            if (DayNr !==3) {
-                                DayNr++;
-                            }
-                            console.log(DayNr);
-                        }}>next</button></div>
+                return (
+                    <div className='BOX-ViewForOne'>
+                        <p>{hour}</p>
+                        <h2>{temp} °C</h2>
+                        <p className='Description'>{description}</p>
+                        <img src={imgSrc} />
+                    </div>
+                )
+            });
+        } else if (this.state.DayNr === 3) {
+            whichDay =  this.props.Day3[0].dt_txt.substr(0,10);
+            displayOneDay = this.props.Day3.map(value => {
+                imgSrc = `http://openweathermap.org/img/wn/${value.weather[0].icon}@2x.png`;
+                hour = value.dt_txt.substr(11);
+                temp = (value.main.temp - 273.15).toFixed(2);
+                description = value.weather[0].description;
 
-                        <div className='ViewWeatherForOne'>
-                            <div className='ScrollContainer'>
-                                {displayOneDay}
-                            </div>
-                        </div>
+                return (
+                    <div className='BOX-ViewForOne'>
+                        <p>{hour}</p>
+                        <h2>{temp} °C</h2>
+                        <p className='Description'>{description}</p>
+                        <img src={imgSrc} />
+                    </div>
+                )
+            });
+        }
+
+        return (
+            <div>
+                <div className='ChangeForThreeDaysRow'>
+                    <button className='skipDay' onClick={() => {
+                        if (this.state.DayNr !== 1) {
+                            this.setState(state => {
+                                return ({ DayNr: state.DayNr - 1 })
+                            });
+                        }
+                    }}>prev</button><h2>{whichDay}</h2><button className='skipDay' onClick={() => {
+                        if (this.state.DayNr !== 3) {
+                            this.setState(state => {
+                                return ({ DayNr: state.DayNr + 1 })
+                            });
+                        }
+                    }}>next</button></div>
+
+                <div className='ViewWeatherForOne'>
+                    <div className='ScrollContainer'>
+                        {displayOneDay}
+                    </div>
                 </div>
-            )
-        
-        });
-
-        return(
-        <div>{displayForTheeDays}</div>
+            </div>
         )
+    }
 }
 
 export default DisplayViewForThree;

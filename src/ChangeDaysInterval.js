@@ -78,7 +78,6 @@ class ChangeDaysInterval extends Component {
             thirdDayArr,
             fourthDayArr
         }});
-        console.log(nowArr);
     }
 
     render(){

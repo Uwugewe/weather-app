@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import WeatherAppList from './WeatherAppSearchCity';
 import logo from './logo.svg';
+import MetaTags from 'react-meta-tags';
 
 import './WeatherApp.css';
 import axios from 'axios';
@@ -72,8 +73,11 @@ class WeatherApp extends Component {
 
         return(
             <div className='WeatherApp'>
+                <MetaTags>
+                <title>WeatherApp by Artur Ksybek</title>
+                </MetaTags>
                 <img src={logo} className="App-logo" alt="logo" />
-                <h1>Weather App by Arturrro</h1>
+                <h1>Weather App by Artur Ksybek</h1>
                 {showInput}
                 <WeatherAppList Filtered={this.state.FilteredIDs} RemoveFindView={this.removeFindView} HideInput={this.hideInput}/>
             </div>
