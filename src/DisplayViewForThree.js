@@ -1,9 +1,13 @@
 import React from 'react';
+import './DisplayViewForThree.css';
 
 function DisplayViewForThree(props) {
 
         let displayForTheeDays = '';
         let displayOneDay = '';
+        let displayDayALT = '';
+
+        let DayNr = 1;
 
         displayForTheeDays = Object.entries(props).map(value => {
             let hour = '';
@@ -28,12 +32,32 @@ function DisplayViewForThree(props) {
                 )
                 
             });
+            if (DayNr === 1){
+                displayDayALT = props.Day1.map(value => {
+                    console.log(value);
+                });
+            }
+
             return(
                 <div>
-                    <h2>{day}</h2>
-                    <div className='ViewWeatherForOne'>
-                        {displayOneDay}
-                    </div>
+                    <div className='ChangeForThreeDaysRow'>
+                        <button onClick={() => {
+                            if (DayNr !== 1) {
+                                DayNr--;
+                            }
+                            console.log(DayNr);
+                        }}>prev</button><h2>{day}</h2><button onClick={() => {
+                            if (DayNr !==3) {
+                                DayNr++;
+                            }
+                            console.log(DayNr);
+                        }}>next</button></div>
+
+                        <div className='ViewWeatherForOne'>
+                            <div className='ScrollContainer'>
+                                {displayOneDay}
+                            </div>
+                        </div>
                 </div>
             )
         
