@@ -15,7 +15,7 @@ class WeatherAppList extends Component {
     }
 
     getWeatherData = () => {
-        axios.get(`http://api.openweathermap.org/data/2.5/forecast?id=${this.state.selectedID}&appid=9ceb925d46b75ee1c3f57b6bfec0c2aa`)
+        axios.get(`http://api.openweathermap.org/data/2.5/forecast?id=${this.state.selectedID}&appid={ENTER YOUR FREE API KEY}`)
         .then( res => {
             let joinState = [];
             
